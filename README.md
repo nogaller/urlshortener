@@ -13,7 +13,7 @@ The implementation of this service is not quite complete. Implement the followin
 - These statistics can be retrieved via the Web Service API.
 
 These features are sorted by priority and therefore should be implemented in that order. It's not necessary to implement
-all of these features - quality goes over quantity ;)
+all of these features - quality over quantity ;)
 
 Please submit the assignment 3 days after it has been sent to you by pushing the code to GitHub.
 
