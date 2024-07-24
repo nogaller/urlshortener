@@ -2,6 +2,7 @@ package io.twodigits.urlshortener;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,15 +19,21 @@ class HttpRequestTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	private String sut;
+
+	@BeforeEach
+	void init() {
+		sut = "http://localhost:" + port + "/";
+	}
+
 	@Test
 	void returnDefaultMessage() throws Exception {
-		assertThat(restTemplate.getForObject("http://localhost:" + port + "/", String.class)).contains("API root");
+		assertThat(restTemplate.getForObject(sut, String.class)).contains("API root");
 	}
 
 	@Test
 	void insertNewUrl() throws Exception {
 		var url = "test";
-		assertThat(restTemplate.getForObject("http://localhost:" + port + "/new?url=" + url, String.class))
-				.contains(url);
+		assertThat(restTemplate.getForObject(sut + "new?url=" + url, String.class)).contains(url);
 	}
 }
