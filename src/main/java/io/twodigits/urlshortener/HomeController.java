@@ -12,4 +12,9 @@ public class HomeController {
 		return "API root";
 	}
 
+	@RequestMapping("/new")
+	public @ResponseBody String add(String url) {
+		return url;
+	}
+
 }

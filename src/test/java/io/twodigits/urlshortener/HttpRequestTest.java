@@ -19,7 +19,14 @@ class HttpRequestTest {
 	private TestRestTemplate restTemplate;
 
 	@Test
-	void greetingShouldReturnDefaultMessage() throws Exception {
+	void returnDefaultMessage() throws Exception {
 		assertThat(restTemplate.getForObject("http://localhost:" + port + "/", String.class)).contains("API root");
+	}
+
+	@Test
+	void insertNewUrl() throws Exception {
+		var url = "test";
+		assertThat(restTemplate.getForObject("http://localhost:" + port + "/new?url=" + url, String.class))
+				.contains(url);
 	}
 }
