@@ -25,7 +25,7 @@ public class URLRepositoryTest {
 		url = repository.save(url);
 		assertThat(url.getId()).isEqualTo(id);
 
-		var storedURl = repository.findById(id);
+		var storedURl = repository.findById(Integer.toString(id));
 		assertThat(storedURl).isPresent();
 		assertThat(storedURl.get().getUrl()).isEqualTo(inputUrl);
 	}

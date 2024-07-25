@@ -10,7 +10,7 @@ public class URL {
 	 * The unique ID of an URL
 	 */
 	@Id
-	private String id;
+	private int id;
 
 	/**
 	 * The URL for which a short URL is provided
@@ -25,11 +25,11 @@ public class URL {
 		return url;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -40,8 +40,8 @@ public class URL {
 	 *
 	 * @return
 	 */
-	public String generateId() {
-		id = url == null ? null : Integer.toHexString(url.hashCode());
+	public int generateId() {
+		id = url == null ? 0 : url.hashCode();
 		return id;
 	}
 
