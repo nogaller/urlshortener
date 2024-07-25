@@ -2,6 +2,8 @@ package io.twodigits.urlshortener.service;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import io.twodigits.urlshortener.model.URLRepository;
 
 @Service
 public class URLShortenerServiceImpl implements URLShortenerService {
+
+	private static final Logger logger = LoggerFactory.getLogger(URLShortenerServiceImpl.class);
 
 	@Autowired
 	private URLRepository repository;
@@ -26,6 +30,8 @@ public class URLShortenerServiceImpl implements URLShortenerService {
 //		url.setId(user);// FIXME implement with Hash-code generation
 		url.setUrl(urlStr);
 		url.generateId();
+
+		logger.info("Generated URL#id " + url.getId());
 		return repository.save(url);
 	}
 
