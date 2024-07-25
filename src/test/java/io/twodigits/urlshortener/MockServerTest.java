@@ -29,9 +29,20 @@ class MockServerTest {
 	@Test
 	void insertNewUrl() throws Exception {
 		var url = "test";
-		mockMvc.perform(post("/").param("url", url)).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString("http://localhost/")));
+		mockMvc.perform(post("/").param("url", url))
+//		.andDo(print())
+				.andExpect(status().isOk()).andExpect(content().string(containsString("http://localhost/")));
 		// TODO review created URL
 //				.andExpect(content().string("http://localhost/userTODO"));
+	}
+
+	@Test
+	void list() throws Exception {
+		insertNewUrl();
+		mockMvc.perform(post("/list"))
+//		.andDo(print())
+				.andExpect(status().isOk())//
+				.andExpect(content().string(containsString("http://localhost/")))
+				.andExpect(content().string(containsString("test")));
 	}
 }
