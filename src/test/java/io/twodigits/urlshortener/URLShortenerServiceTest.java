@@ -52,7 +52,7 @@ public class URLShortenerServiceTest {
 	void getURLbyID() {
 		var savedId = addURL();
 
-		var url = service.getURL(Integer.toString(savedId));
+		var url = service.getURL(savedId);
 		assertThat(url).isPresent();
 		assertThat(url.get().getId()).isEqualTo(savedId);
 		assertThat(url.get().getUrl()).isEqualTo("test");
@@ -62,7 +62,7 @@ public class URLShortenerServiceTest {
 	void getURLbyIDandUser() {
 		var savedId = addURL();
 
-		var url = service.getURL("user", Integer.toString(savedId));
+		var url = service.getURL("user", savedId);
 		assertThat(url).isPresent();
 		assertThat(url.get().getId()).isEqualTo(savedId);
 		assertThat(url.get().getUrl()).isEqualTo("test");

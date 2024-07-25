@@ -32,12 +32,12 @@ public class URLShortenerServiceImpl implements URLShortenerService {
 	}
 
 	@Override
-	public Optional<URL> getURL(String user, String id) {
+	public Optional<URL> getURL(String user, Integer id) {
 		return getURL(id);
 	}
 
 	@Override
-	public Optional<URL> getURL(String id) {
+	public Optional<URL> getURL(Integer id) {
 		return repository.findById(id);
 	}
 
