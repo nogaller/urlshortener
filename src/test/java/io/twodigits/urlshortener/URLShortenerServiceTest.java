@@ -18,10 +18,28 @@ public class URLShortenerServiceTest {
 	private URLShortenerService service;
 
 	@Test
-	public void addURL() throws Exception {
+	int addURL() {
 		var url = service.addURL(null, "test");
 		assertThat(url.getId()).isNotNull();
+
+		return url.getId();
+	}
+
+	@Test
+	void listURLs() {
+		var urls = service.listURLs(null);
+		assertThat(urls).hasSize(0);
+
+		var savedId = addURL();
+
+		urls = service.listURLs(null);
+		assertThat(urls).hasSize(1);
+		var url = urls.iterator().next();
+		assertThat(url.getId()).isEqualTo(savedId);
+	}
+
+	@Test
+	void getURLbyID() {
 		// TODO
-		System.err.println(url.getId());
 	}
 }

@@ -20,8 +20,7 @@ public class URLShortenerServiceImpl implements URLShortenerService {
 
 	@Override
 	public Iterable<URL> listURLs(String user) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll();
 	}
 
 	@Override
