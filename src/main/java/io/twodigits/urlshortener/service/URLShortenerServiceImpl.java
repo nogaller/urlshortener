@@ -33,14 +33,12 @@ public class URLShortenerServiceImpl implements URLShortenerService {
 
 	@Override
 	public Optional<URL> getURL(String user, String id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return getURL(id);
 	}
 
 	@Override
 	public Optional<URL> getURL(String id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return repository.findById(id);
 	}
 
 	@Override
