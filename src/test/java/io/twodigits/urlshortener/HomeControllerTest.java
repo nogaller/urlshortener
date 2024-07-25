@@ -22,7 +22,7 @@ class HomeControllerTest {
 	void contextLoads() {
 		assertThat(controller).isNotNull();
 
-		assertThat(controller.greeting()).isEqualTo("API root");
+		assertThat(controller.add(null)).isEqualTo("API root");
 
 		assertThat(service).isNotNull();
 		assertThat(service).isInstanceOf(URLShortenerServiceImpl.class);
