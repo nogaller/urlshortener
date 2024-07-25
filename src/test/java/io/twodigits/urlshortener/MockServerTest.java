@@ -28,8 +28,10 @@ class MockServerTest {
 
 	@Test
 	void insertNewUrl() throws Exception {
-		String url = "test";
+		var url = "test";
 		mockMvc.perform(post("/new").param("url", url)).andDo(print()).andExpect(status().isOk())
-				.andExpect(content().string(containsString(url)));
+				.andExpect(content().string(containsString("userTODO")))
+				// TODO
+				.andExpect(content().string("http://localhost/userTODO"));
 	}
 }

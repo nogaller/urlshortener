@@ -34,6 +34,6 @@ class HttpRequestTest {
 	@Test
 	void insertNewUrl() throws Exception {
 		var url = "test";
-		assertThat(restTemplate.getForObject(sut + "new?url=" + url, String.class)).contains(url);
+		assertThat(restTemplate.getForObject(sut + "new?url=" + url, String.class)).contains("userTODO");
 	}
 }
