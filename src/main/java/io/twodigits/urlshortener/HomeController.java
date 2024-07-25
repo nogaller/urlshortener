@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -39,20 +40,45 @@ public class HomeController {
 
 		var shortUrl = service.addURL("userTODO", url);
 
-		return toStoredStringUrl(shortUrl);
+		return toHexadecimalIdUrl(shortUrl);
+	}
+
+	@RequestMapping("/{id}")
+	public @ResponseBody String getURL(@PathVariable String id) {
+
+		var intId = fromHexadeimalID(id);
+		var url = service.getURL("userTODO", intId);
+
+		return url.isPresent() ? url.get().getUrl() : "invalid short URL";
 	}
 
 	@RequestMapping("/list")
 	public @ResponseBody String list() {
 		var urls = service.listURLs(null);
 		return StreamSupport.stream(urls.spliterator(), false)//
-				.map(it -> toStoredStringUrl(it) + " -> " + it.getUrl())//
+				.map(it -> toHexadecimalIdUrl(it) + " -> " + it.getUrl())//
 				.collect(Collectors.joining("<br>" + LINE_SEPARATOR));
 	}
 
-	private String toStoredStringUrl(URL shortUrl) {
+	/**
+	 * from int ID to shorter HEX int
+	 *
+	 * @param shortUrl
+	 * @return
+	 */
+	private String toHexadecimalIdUrl(URL shortUrl) {
 		var baseURL = getBaseUrl();
 		return baseURL + "/" + Integer.toHexString(shortUrl.getId());
+	}
+
+	/**
+	 * Reverse function: from HEX int to decimal int
+	 *
+	 * @param id
+	 * @return
+	 */
+	private int fromHexadeimalID(String id) {
+		return Integer.parseUnsignedInt(id, 16);
 	}
 
 	/** get Base URL of the service */
