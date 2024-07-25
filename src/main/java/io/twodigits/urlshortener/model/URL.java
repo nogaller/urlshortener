@@ -17,6 +17,20 @@ public class URL {
 	 */
 	private String url;
 
+	/** default constructor */
+	public URL() {
+	}
+
+	/**
+	 * Constructor will create new Entry and generate Id
+	 *
+	 * @param urlStr
+	 */
+	public URL(String urlStr) {
+		url = urlStr;
+		generateId();
+	}
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
