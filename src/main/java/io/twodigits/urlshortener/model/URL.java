@@ -33,4 +33,16 @@ public class URL {
 		return id;
 	}
 
+	/**
+	 * When {@link #url} is set, trigger ID generation.<br>
+	 * Set to NULL otherwise<br>
+	 * PS: must be called once {@link #url} is set
+	 *
+	 * @return
+	 */
+	public String generateId() {
+		id = url == null ? null : Integer.toHexString(url.hashCode());
+		return id;
+	}
+
 }

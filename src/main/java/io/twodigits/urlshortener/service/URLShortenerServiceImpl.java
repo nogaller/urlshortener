@@ -23,8 +23,9 @@ public class URLShortenerServiceImpl implements URLShortenerService {
 	@Override
 	public URL addURL(String user, String urlStr) {
 		var url = new URL();
-		url.setId(user);// FIXME implement with Hash-code generation
+//		url.setId(user);// FIXME implement with Hash-code generation
 		url.setUrl(urlStr);
+		url.generateId();
 		return repository.save(url);
 	}
 
