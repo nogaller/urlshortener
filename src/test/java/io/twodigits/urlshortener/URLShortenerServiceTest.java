@@ -67,4 +67,15 @@ public class URLShortenerServiceTest {
 		assertThat(url.get().getId()).isEqualTo(savedId);
 		assertThat(url.get().getUrl()).isEqualTo("test");
 	}
+
+	@Test
+	void updateURL() {
+		var savedId = addURL();
+
+		service.updateURL(null, "new test", savedId);
+
+		var url = service.getURL(savedId);
+		assertThat(url).isPresent();
+		assertThat(url.get().getUrl()).isEqualTo("new test");
+	}
 }

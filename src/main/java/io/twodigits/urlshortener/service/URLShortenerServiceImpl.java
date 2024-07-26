@@ -47,4 +47,12 @@ public class URLShortenerServiceImpl implements URLShortenerService {
 
 	}
 
+	@Override
+	public void updateURL(String user, String url, Integer id) {
+		repository.findById(id).ifPresent(it -> {
+			it.setUrl(url);
+			repository.save(it);
+		});
+	}
+
 }

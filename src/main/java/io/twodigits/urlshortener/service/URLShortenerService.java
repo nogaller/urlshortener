@@ -47,4 +47,12 @@ public interface URLShortenerService {
 	 */
 	void deleteURL(String user, String id);
 
+	/**
+	 * Replace stored URL at known ID
+	 *
+	 * @param user
+	 * @param url
+	 * @param id
+	 */
+	void updateURL(String user, String url, Integer id);
 }
