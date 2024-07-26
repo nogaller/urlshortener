@@ -1,9 +1,9 @@
 package io.twodigits.urlshortener;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,7 +38,9 @@ class MockServerTest {
 
 	@Test
 	void returnDefaultMessage() throws Exception {
-		mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+		mockMvc.perform(get("/"))
+//		.andDo(print())
+				.andExpect(status().isOk())//
 				.andExpect(content().string(containsString("API root")));
 	}
 
@@ -68,7 +70,8 @@ class MockServerTest {
 
 		var id = 0x123abc;
 
-		mockMvc.perform(post("/" + id)).andExpect(status().isOk())//
+		mockMvc.perform(post("/" + id))//
+				.andExpect(status().isOk())//
 				.andExpect(content().string(containsString("invalid short URL")));
 	}
 
@@ -98,4 +101,23 @@ class MockServerTest {
 				.andExpect(status().isOk())//
 				.andExpect(content().string(newTestUrl));
 	}
+
+	@Test
+	void deleteURL() throws Exception {
+		// insert URL
+		var result = insertNewUrl();
+		var content = result.getResponse().getContentAsString();
+
+		var id = content.substring(BASE_URL.length());
+
+		// remove existing URL
+		mockMvc.perform(delete("/" + id)).andExpect(status().isOk());
+
+		// URL removed, should not be there
+		mockMvc.perform(post("/" + id))
+//		.andDo(print())
+				.andExpect(status().isOk())//
+				.andExpect(content().string(containsString("invalid short URL")));
+	}
+
 }

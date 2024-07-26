@@ -42,9 +42,8 @@ public class URLShortenerServiceImpl implements URLShortenerService {
 	}
 
 	@Override
-	public void deleteURL(String user, String id) {
-		// TODO Auto-generated method stub
-
+	public void deleteURL(String user, Integer id) {
+		repository.deleteById(id);
 	}
 
 	@Override
