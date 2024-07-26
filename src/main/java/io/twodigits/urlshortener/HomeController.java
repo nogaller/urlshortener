@@ -26,8 +26,8 @@ public class HomeController {
 	private URLShortenerService service;
 
 	/**
-	 * A user can add a website URL for which a short URL is created and stored in
-	 * the database.<br>
+	 * A user can CREATE - add a website URL for which a short URL is created and
+	 * stored in the database.<br>
 	 * The short URL must have a unique ID consisting of alphanumeric characters.
 	 *
 	 * @param url
@@ -38,20 +38,41 @@ public class HomeController {
 		if (ObjectUtils.isEmpty(url))
 			return "API root";
 
-		var shortUrl = service.addURL("userTODO", url);
+		var shortUrlId = service.addURL("userTODO", url);
 
-		return toHexadecimalIdUrl(shortUrl);
+		return toHexadecimalIdUrl(shortUrlId);
 	}
 
+	/**
+	 * User can READ original URL from short one<br>
+	 * OR UPDATE
+	 *
+	 * @param id
+	 * @return Stored Url for given short URL, or new URL (use exinsing Link to
+	 *         stored)
+	 */
 	@RequestMapping("/{id}")
-	public @ResponseBody String getURL(@PathVariable String id) {
-
+	public @ResponseBody String getURL(@PathVariable String id, String url) {
 		var intId = fromHexadeimalID(id);
-		var url = service.getURL("userTODO", intId);
+		var storedUrl = service.getURL("userTODO", intId);
 
-		return url.isPresent() ? url.get().getUrl() : "invalid short URL";
+		if (storedUrl.isEmpty())
+			return "invalid short URL";
+
+		// find stored URL
+		if (url == null)
+			return storedUrl.get().getUrl();
+
+		// update URL
+		service.updateURL("userTODO", url, intId);
+		return url;
 	}
 
+	/**
+	 * User can List All stored {@link URL}'s
+	 *
+	 * @return
+	 */
 	@RequestMapping("/list")
 	public @ResponseBody String list() {
 		var urls = service.listURLs(null);

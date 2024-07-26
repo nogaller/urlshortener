@@ -84,4 +84,18 @@ class MockServerTest {
 				.andExpect(status().isOk())//
 				.andExpect(content().string(TEST_URL));
 	}
+
+	@Test
+	void updateURL() throws Exception {
+		var result = insertNewUrl();
+		var content = result.getResponse().getContentAsString();
+
+		var id = content.substring(BASE_URL.length());
+
+		final var newTestUrl = "http://new/test";
+		mockMvc.perform(post("/" + id).param("url", newTestUrl))
+//				.andDo(print())
+				.andExpect(status().isOk())//
+				.andExpect(content().string(newTestUrl));
+	}
 }
