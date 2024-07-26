@@ -52,6 +52,8 @@ After a few seconds the application should have started successfully. You can ac
 
 [http://localhost:8080/list](http://localhost:8080/list) - list all saved shortcuts
 
+[http://localhost:8080/list/json](http://localhost:8080/list/json) - list all saved shortcuts as **JSON**
+
 To delete entry use **curl** from command line
 
 ```bash

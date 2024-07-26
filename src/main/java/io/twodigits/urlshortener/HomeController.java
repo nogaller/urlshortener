@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.twodigits.urlshortener.model.URL;
 import io.twodigits.urlshortener.service.URLShortenerService;
@@ -40,8 +39,9 @@ public class HomeController {
 			return "API root";
 
 		var shortUrlId = service.addURL("userTODO", url);
+		var urlTO = new UrlTO(shortUrlId);
 
-		return toHexadecimalIdUrl(shortUrlId);
+		return urlTO.getShortUrl();
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class HomeController {
 	 */
 	@RequestMapping("/{id}")
 	public String getURL(@PathVariable String id, String url) {
-		var intId = fromHexadeimalID(id);
+		var intId = new UrlTO(id, null).toUrlID();
 		var storedUrl = service.getURL("userTODO", intId);
 
 		if (storedUrl.isEmpty())
@@ -76,7 +76,7 @@ public class HomeController {
 	 */
 	@DeleteMapping("/{id}")
 	public @ResponseBody String deleteURL(@PathVariable String id) {
-		var intId = fromHexadeimalID(id);
+		var intId = new UrlTO(id, null).toUrlID();
 		service.deleteURL("userTODO", intId);
 		return null;
 	}
@@ -89,35 +89,25 @@ public class HomeController {
 	@RequestMapping("/list")
 	public @ResponseBody String list() {
 		var urls = service.listURLs(null);
+
 		return StreamSupport.stream(urls.spliterator(), false)//
-				.map(it -> toHexadecimalIdUrl(it) + " -> " + it.getUrl())//
+				.map(UrlTO::new)//
+				.map(it -> it.getShortUrl() + " -> " + it.getLongUrl())
 				.collect(Collectors.joining("<br>" + LINE_SEPARATOR));
 	}
 
 	/**
-	 * from int ID to shorter HEX int
+	 * User can List All stored {@link URL}'s
 	 *
-	 * @param shortUrl
 	 * @return
 	 */
-	private String toHexadecimalIdUrl(URL shortUrl) {
-		var baseURL = getBaseUrl();
-		return baseURL + "/" + Integer.toHexString(shortUrl.getId());
-	}
+	@RequestMapping("/list/json")
+	public @ResponseBody Object listJson() {
+		var urls = service.listURLs(null);
 
-	/**
-	 * Reverse function: from HEX int to decimal int
-	 *
-	 * @param id
-	 * @return
-	 */
-	private int fromHexadeimalID(String id) {
-		return Integer.parseUnsignedInt(id, 16);
-	}
-
-	/** get Base URL of the service */
-	private final String getBaseUrl() {
-		return ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();
+		return StreamSupport.stream(urls.spliterator(), false)//
+				.map(UrlTO::new)//
+				.collect(Collectors.toList());
 	}
 
 }
