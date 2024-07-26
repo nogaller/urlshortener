@@ -53,7 +53,7 @@ public class HomeController {
 	 *         stored)
 	 */
 	@RequestMapping("/{id}")
-	public @ResponseBody String getURL(@PathVariable String id, String url) {
+	public String getURL(@PathVariable String id, String url) {
 		var intId = fromHexadeimalID(id);
 		var storedUrl = service.getURL("userTODO", intId);
 
@@ -62,7 +62,7 @@ public class HomeController {
 
 		// find stored URL
 		if (url == null)
-			return storedUrl.get().getUrl();
+			return "redirect:" + storedUrl.get().getUrl();
 
 		// update URL
 		service.updateURL("userTODO", url, intId);

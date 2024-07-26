@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -71,8 +73,9 @@ class MockServerTest {
 		var id = 0x123abc;
 
 		mockMvc.perform(post("/" + id))//
+//				.andDo(print(System.err))//
 				.andExpect(status().isOk())//
-				.andExpect(content().string(containsString("invalid short URL")));
+				.andExpect(forwardedUrl("invalid short URL"));
 	}
 
 	@Test
@@ -82,10 +85,10 @@ class MockServerTest {
 
 		var id = content.substring(BASE_URL.length());
 
-		mockMvc.perform(post("/" + id))
-//				.andDo(print())
-				.andExpect(status().isOk())//
-				.andExpect(content().string(TEST_URL));
+		mockMvc.perform(post("/" + id))//
+//				.andDo(print(System.err))//
+				.andExpect(status().is3xxRedirection())//
+				.andExpect(redirectedUrl(TEST_URL));
 	}
 
 	@Test
@@ -99,7 +102,7 @@ class MockServerTest {
 		mockMvc.perform(post("/" + id).param("url", newTestUrl))
 //				.andDo(print())
 				.andExpect(status().isOk())//
-				.andExpect(content().string(newTestUrl));
+				.andExpect(forwardedUrl(newTestUrl));
 	}
 
 	@Test
@@ -117,7 +120,7 @@ class MockServerTest {
 		mockMvc.perform(post("/" + id))
 //		.andDo(print())
 				.andExpect(status().isOk())//
-				.andExpect(content().string(containsString("invalid short URL")));
+				.andExpect(forwardedUrl("invalid short URL"));
 	}
 
 }
