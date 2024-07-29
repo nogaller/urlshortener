@@ -7,7 +7,7 @@ The implementation of this service is not quite complete. Implement the followin
 - ☑ A user can add a website URL for which a short URL is created and stored in the database. The short URL must have a unique ID
   consisting of alphanumeric characters.
 - ☑ The service exposes a Web Service API for providing appropriate CRUD operations to consumers.
-- ☐ *Optional*: The Web Service API accepts and provides data in multiple formats, e.g. JSON, XML, etc.
+- ☑ *Optional*: The Web Service API accepts and provides data in multiple formats, e.g. JSON, XML, etc.
 - ☑ When opening a short URL in a Web Browser the website of the original URL shows up.
 - ☐ Whenever someone opens a short URL a set of statistics is stored (number of calls, date and time, user agent, referrer, etc.).
 - ☐ These statistics can be retrieved via the Web Service API.
@@ -53,6 +53,8 @@ After a few seconds the application should have started successfully. You can ac
 [http://localhost:8080/list](http://localhost:8080/list) - list all saved shortcuts
 
 [http://localhost:8080/list/json](http://localhost:8080/list/json) - list all saved shortcuts as **JSON**
+
+[http://localhost:8080/list/json](http://localhost:8080/list/xml) - list all saved shortcuts as **XML**
 
 To delete entry use **curl** from command line
 

@@ -81,6 +81,21 @@ class MockServerTest {
 	}
 
 	@Test
+	void listXML() throws Exception {
+		var result = insertNewUrl();
+		var content = result.getResponse().getContentAsString();
+
+		var id = content.substring(BASE_URL.length());
+
+		mockMvc.perform(post("/list/xml"))
+//		.andDo(print())
+				.andExpect(status().isOk())//
+				.andExpect(content()//
+						.xml("<List><item><shortUrl>" + BASE_URL + id + "</shortUrl><longUrl>" + TEST_URL
+								+ "</longUrl></item></List>"));
+	}
+
+	@Test
 	void getStoredURLinvalid() throws Exception {
 		insertNewUrl();
 

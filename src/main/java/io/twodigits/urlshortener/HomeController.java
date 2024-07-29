@@ -2,12 +2,14 @@ package io.twodigits.urlshortener;
 
 import static org.apache.logging.log4j.util.Strings.LINE_SEPARATOR;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -97,17 +99,27 @@ public class HomeController {
 	}
 
 	/**
-	 * User can List All stored {@link URL}'s
+	 * User can List All stored {@link URL}'s as JSON
 	 *
 	 * @return
 	 */
 	@RequestMapping("/list/json")
-	public @ResponseBody Object listJson() {
+	public @ResponseBody List<UrlTO> listJson() {
 		var urls = service.listURLs(null);
 
 		return StreamSupport.stream(urls.spliterator(), false)//
 				.map(UrlTO::new)//
 				.collect(Collectors.toList());
+	}
+
+	/**
+	 * User can List All stored {@link URL}'s as XML
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/list/xml", produces = { MediaType.APPLICATION_XML_VALUE })
+	public @ResponseBody List<UrlTO> listXml() {
+		return listJson();
 	}
 
 }
