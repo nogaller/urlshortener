@@ -67,6 +67,20 @@ class MockServerTest {
 	}
 
 	@Test
+	void listJSON() throws Exception {
+		var result = insertNewUrl();
+		var content = result.getResponse().getContentAsString();
+
+		var id = content.substring(BASE_URL.length());
+
+		mockMvc.perform(post("/list/json"))
+//		.andDo(print())
+				.andExpect(status().isOk())//
+				.andExpect(content()//
+						.json("[{\"shortUrl\":\"" + BASE_URL + id + "\",\"longUrl\":\"" + TEST_URL + "\"}]"));
+	}
+
+	@Test
 	void getStoredURLinvalid() throws Exception {
 		insertNewUrl();
 
