@@ -61,3 +61,9 @@ To delete entry use **curl** from command line
 ```bash
 curl -X DELETE http://localhost:8080/748e48c3
 ```
+
+**Documentation**
+
+API JSON [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
+
+Swagger  [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
