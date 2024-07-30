@@ -23,8 +23,8 @@ import io.twodigits.urlshortener.model.URLRepository;
 @AutoConfigureMockMvc
 class MockServerTest {
 
-	private static final String BASE_URL = "http://localhost/";
-	private static final String TEST_URL = "https://www.google.com/hello?param=world";
+	static final String BASE_URL = "http://localhost/";
+	static final String TEST_URL = "https://www.google.com/hello?param=world";
 
 	@Autowired
 	private MockMvc mockMvc;
