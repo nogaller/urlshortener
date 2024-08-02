@@ -6,12 +6,14 @@ import io.twodigits.urlshortener.model.URL;
 
 public interface URLShortenerService {
 	/**
-	 * Get a list of all URLs that belong to a user.
+	 * Get a list of all URLs that belong to a user.<br>
+	 * Filter by LongURL containing filter text
 	 *
 	 * @param user
+	 * @param filter
 	 * @return a list of users
 	 */
-	Iterable<URL> listURLs(String user);
+	Iterable<URL> listURLs(String user, String filter);
 
 	/**
 	 * Add a new URL to the collection of URLs for a user.

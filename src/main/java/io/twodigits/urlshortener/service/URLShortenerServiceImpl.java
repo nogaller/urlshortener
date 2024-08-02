@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import io.twodigits.urlshortener.model.URL;
 import io.twodigits.urlshortener.model.URLRepository;
@@ -19,8 +20,8 @@ public class URLShortenerServiceImpl implements URLShortenerService {
 	private URLRepository repository;
 
 	@Override
-	public Iterable<URL> listURLs(String user) {
-		return repository.findAll();
+	public Iterable<URL> listURLs(String user, String filter) {
+		return ObjectUtils.isEmpty(filter) ? repository.findAll() : repository.findByUrlContainingIgnoreCase(filter);
 	}
 
 	@Override

@@ -37,15 +37,23 @@ public class URLShortenerServiceTest {
 
 	@Test
 	void listURLs() {
-		var urls = service.listURLs(null);
+		var urls = service.listURLs(null, null);
 		assertThat(urls).hasSize(0);
 
 		var savedId = addURL();
 
-		urls = service.listURLs(null);
+		urls = service.listURLs(null, null);
 		assertThat(urls).hasSize(1);
 		var url = urls.iterator().next();
 		assertThat(url.getId()).isEqualTo(savedId);
+
+		// and filter
+		urls = service.listURLs(null, "es");
+		assertThat(urls).hasSize(1);
+
+		// filter not matched
+		urls = service.listURLs(null, "pq");
+		assertThat(urls).isEmpty();
 	}
 
 	@Test
