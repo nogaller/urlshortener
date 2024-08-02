@@ -1,6 +1,7 @@
 package io.twodigits.urlshortener;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -64,6 +65,23 @@ class MockServerTest {
 				.andExpect(status().isOk())//
 				.andExpect(content().string(containsString(BASE_URL)))
 				.andExpect(content().string(containsString(TEST_URL)));
+	}
+
+	@Test
+	void listAndFilter() throws Exception {
+		insertNewUrl();
+
+		mockMvc.perform(post("/list").param("filter", "hello"))
+//		.andDo(print())
+				.andExpect(status().isOk())//
+				.andExpect(content().string(containsString(BASE_URL)))
+				.andExpect(content().string(containsString(TEST_URL)));
+
+		mockMvc.perform(post("/list").param("filter", "FAIL"))
+//		.andDo(print())
+				.andExpect(status().isOk())//
+				.andExpect(content().string(not(containsString(BASE_URL))))
+				.andExpect(content().string(not(containsString(TEST_URL))));
 	}
 
 	@Test

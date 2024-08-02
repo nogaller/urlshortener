@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+import io.twodigits.urlshortener.model.URLRepository;
+
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class HttpRequestTest {
 
@@ -24,11 +26,16 @@ class HttpRequestTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	@Autowired
+	private URLRepository repository;
+
 	private String sut;
 
 	@BeforeEach
 	void init() {
 		sut = "http://localhost:" + port + "/";
+		// Cleanup DB on each run
+		repository.deleteAll();
 	}
 
 	@Test
@@ -49,6 +56,9 @@ class HttpRequestTest {
 		assertThat(restTemplate.getForObject(sut + "list", String.class))//
 				.contains(shortUrl)//
 				.contains(TEST_URL);
+
+		assertThat(restTemplate.getForObject(sut + "list?filter=FAIL", String.class))//
+				.isNullOrEmpty();
 	}
 
 	@Test
@@ -71,5 +81,17 @@ class HttpRequestTest {
 		assertThat(result)//
 				.contains(shortUrl)//
 				.contains(TEST_URL);
+	}
+
+	@Test
+	void listXMLandFilter() throws Exception {
+		insertNewUrl();
+		restTemplate.getForObject(sut + "?url=FAIL", String.class);
+
+		var result = restTemplate.getForObject(sut + "list/xml?filter=google", String.class);
+		logger.info(result);
+		assertThat(result)//
+				.contains("google")//
+				.doesNotContain("FAIL");
 	}
 }

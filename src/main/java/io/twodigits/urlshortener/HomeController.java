@@ -15,6 +15,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.twodigits.urlshortener.model.URL;
@@ -89,8 +90,8 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public @ResponseBody String list() {
-		var urls = service.listURLs(null);
+	public @ResponseBody String list(@RequestParam(required = false) String filter) {
+		var urls = service.listURLs(null, filter);
 
 		return StreamSupport.stream(urls.spliterator(), false)//
 				.map(UrlTO::new)//
@@ -104,8 +105,8 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping("/list/json")
-	public @ResponseBody List<UrlTO> listJson() {
-		var urls = service.listURLs(null);
+	public @ResponseBody List<UrlTO> listJson(@RequestParam(required = false) String filter) {
+		var urls = service.listURLs(null, filter);
 
 		return StreamSupport.stream(urls.spliterator(), false)//
 				.map(UrlTO::new)//
@@ -118,8 +119,8 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/list/xml", produces = { MediaType.APPLICATION_XML_VALUE })
-	public @ResponseBody List<UrlTO> listXml() {
-		return listJson();
+	public @ResponseBody List<UrlTO> listXml(@RequestParam(required = false) String filter) {
+		return listJson(filter);
 	}
 
 }
