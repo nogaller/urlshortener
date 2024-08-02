@@ -15,12 +15,10 @@ public class URLRepositoryTest {
 	@Test
 	public void testCreateAndFind() throws Exception {
 		var inputUrl = "https://some.test.de/site?param=uno";
-		var url = new URL();
-		url.setUrl(inputUrl);
-		var id = url.generateId();
+		var url = new URL(inputUrl);
+		var id = url.getId();
 
-		assertThat(url.getId()).isNotNull();
-		System.err.println(url.getId());
+		assertThat(url.getId()).isNotEqualTo(0);
 
 		url = repository.save(url);
 		assertThat(url.getId()).isEqualTo(id);
@@ -28,5 +26,11 @@ public class URLRepositoryTest {
 		var storedURl = repository.findById(id);
 		assertThat(storedURl).isPresent();
 		assertThat(storedURl.get().getUrl()).isEqualTo(inputUrl);
+
+		repository.save(new URL("www.tmp.de"));
+		var list = repository.findByUrlContainingIgnoreCase("test.de");
+		assertThat(list).hasSize(1);
+		list = repository.findByUrlContainingIgnoreCase(".de");
+		assertThat(list).hasSize(2);
 	}
 }
