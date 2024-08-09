@@ -1,6 +1,6 @@
 package io.twodigits.urlshortener;
 
-import static io.twodigits.urlshortener.MockServerTest.TEST_URL;
+import static io.twodigits.urlshortener.HomeControllerTest.TEST_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import io.twodigits.urlshortener.model.URLRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class HttpRequestTest {
+class IntegrationTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
