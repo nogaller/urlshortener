@@ -1,4 +1,4 @@
-package io.twodigits.urlshortener.model;
+package urlshortener.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

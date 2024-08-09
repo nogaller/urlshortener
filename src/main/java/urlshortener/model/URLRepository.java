@@ -1,4 +1,4 @@
-package io.twodigits.urlshortener.model;
+package urlshortener.model;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package io.twodigits.urlshortener;
+package urlshortener.model;
 
 import javax.sql.DataSource;
 

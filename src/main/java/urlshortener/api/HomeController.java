@@ -1,4 +1,4 @@
-package io.twodigits.urlshortener;
+package urlshortener.api;
 
 import static org.apache.logging.log4j.util.Strings.LINE_SEPARATOR;
 
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import io.twodigits.urlshortener.model.URL;
-import io.twodigits.urlshortener.service.URLShortenerService;
+import urlshortener.model.URL;
+import urlshortener.service.URLShortenerService;
 
 @Controller
 public class HomeController {

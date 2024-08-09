@@ -1,8 +1,8 @@
-package io.twodigits.urlshortener;
+package urlshortener.api;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import io.twodigits.urlshortener.model.URL;
+import urlshortener.model.URL;
 
 /**
  * URL Transfer object

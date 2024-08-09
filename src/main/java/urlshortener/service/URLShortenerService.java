@@ -1,8 +1,8 @@
-package io.twodigits.urlshortener.service;
+package urlshortener.service;
 
 import java.util.Optional;
 
-import io.twodigits.urlshortener.model.URL;
+import urlshortener.model.URL;
 
 public interface URLShortenerService {
 	/**

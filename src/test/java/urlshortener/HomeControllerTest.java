@@ -1,4 +1,4 @@
-package io.twodigits.urlshortener;
+package urlshortener;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import io.twodigits.urlshortener.model.URLRepository;
+import urlshortener.model.URLRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc

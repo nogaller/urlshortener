@@ -1,4 +1,4 @@
-package io.twodigits.urlshortener.service;
+package urlshortener.service;
 
 import java.util.Optional;
 
@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import io.twodigits.urlshortener.model.URL;
-import io.twodigits.urlshortener.model.URLRepository;
+import urlshortener.model.URL;
+import urlshortener.model.URLRepository;
 
 @Service
 public class URLShortenerServiceImpl implements URLShortenerService {
